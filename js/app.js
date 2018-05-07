@@ -23,7 +23,7 @@ var Enemy = function() {
     var initialLocX = [-101, -202, -404];
     var initialLocY = [63, 146, 230];
     // Array to set speeds
-    var speeds = [27.5, 55.5, 75, 175, 275, 425, 550];
+    var speeds = [30, 55, 75, 175, 275, 425, 550];
     // Randomized arrays to locate enemies in different positions
     var randomlocX = shuffle(initialLocX);
     var randomlocY = shuffle(initialLocY);
@@ -38,13 +38,14 @@ var Enemy = function() {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
     if (this.x < 707) {
       this.x += this.speed * dt;
     } else {
       this.x= -101;
+    }
+    if (this.x < player.x + 55 && this.x + 55 > player.x && this.y < player.y + 55 && this.y + 55 > player.y) {
+      player.x = 202;
+      player.y = 400;
     }
 };
 
@@ -57,12 +58,15 @@ var Player = function() {
     // The image/sprite for our players
     this.sprite = 'images/char-boy.png';
     //Initial player's position
-    this.x = 202.5;
-    this.y = 380;
+    this.x = 202;
+    this.y = 400;
 };
 
-Player.prototype.update = function(dt) {
-
+Player.prototype.update = function() {
+    if (this.y < 50){
+        this.x = 202;
+        this.y = 400;
+    }
 };
 
 // Draw the player on the screen, required method for game
@@ -74,11 +78,11 @@ Player.prototype.handleInput = function(keys) {
     if (keys === 'left' && this.x > 101) {
         this.x -= 100;
     } else if (keys === 'up' && this.y > 15) {
-        this.y -= 82.5;
-    } else if (keys === 'right' && this.x < 380) {
+        this.y -= 82;
+    } else if (keys === 'right' && this.x < 400) {
         this.x += 100;
-    } else if (keys === 'down' && this.y < 380) {
-        this.y += 82.5;
+    } else if (keys === 'down' && this.y < 400) {
+        this.y += 82;
     }
 };
 
@@ -87,10 +91,11 @@ var bugOne = new Enemy();
 var bugTwo = new Enemy();
 var bugThree = new Enemy();
 var bugFour = new Enemy();
+var bugFive = new Enemy();
 
 // Place all enemy objects in an array called allEnemies
 const allEnemies = [];
-allEnemies.push(bugOne, bugTwo, bugThree, bugFour);
+allEnemies.push(bugOne, bugTwo, bugThree, bugFour, bugFive);
 
 
 // Place the player object in a variable called player
