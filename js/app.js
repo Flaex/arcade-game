@@ -1,3 +1,7 @@
+function reload() {
+    location.reload();
+}
+
 function shuffle(array) {
   let currentIndex = array.length,
     temporaryValue, randomIndex;
@@ -64,8 +68,18 @@ var Player = function() {
 
 Player.prototype.update = function() {
     if (this.y < 50){
+        var gameWon = document.body.appendChild(document.createElement('div')),
+        gameWonText = document.createTextNode('You made it! You have crossed the street safely <3 :D <3'),
+        gameWonTag = gameWon.appendChild(document.createElement('p')),
+        gameWonButton = gameWon.appendChild(document.createElement('div'));
+        gameWonButton.innerHTML = 'Close X';
+        gameWonButton.className = 'reload';
+        gameWon.className ='game-won';
+        gameWonTag.appendChild(gameWonText);
+        gameWon.appendChild(gameWonButton);
         this.x = 202;
         this.y = 400;
+        gameWonButton.addEventListener('click', reload);
     }
 };
 
@@ -92,10 +106,11 @@ var bugTwo = new Enemy();
 var bugThree = new Enemy();
 var bugFour = new Enemy();
 var bugFive = new Enemy();
+var bugSix = new Enemy();
 
 // Place all enemy objects in an array called allEnemies
 const allEnemies = [];
-allEnemies.push(bugOne, bugTwo, bugThree, bugFour, bugFive);
+allEnemies.push(bugOne, bugTwo, bugThree, bugFour, bugFive, bugSix);
 
 
 // Place the player object in a variable called player
